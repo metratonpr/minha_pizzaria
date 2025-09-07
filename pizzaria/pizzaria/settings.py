@@ -10,11 +10,33 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import Path
-import os
+"""
+Arquivo de configuração principal do projeto Django "pizzaria".
 
+⚙️ Aqui ficam todas as variáveis de ambiente do projeto:
+- Segurança
+- Banco de dados
+- Idioma e fuso horário
+- Configuração de apps
+- Arquivos estáticos e de mídia
+"""
+
+from pathlib import Path # Para manipular caminhos de arquivos/pastas
+import os # Para trabalhar com diretórios e variáveis de ambiente
+
+# -------------------------------
+# CAMINHOS BASE
+# -------------------------------
+# BASE_DIR representa a pasta raiz do projeto 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# -------------------------------
+# SEGURANÇA
+# -------------------------------
+# ⚠️ Chave secreta usada para criptografia interna do Django
+# (deve ser mantida em segredo em produção!)
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,9 +45,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure--995^*5hp27*920=dilr@2$qheel$9-=*=-_&zm7xwd&6g@v6d"
 
+# Ativa modo DEBUG (apenas para desenvolvimento!)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Lista de hosts permitidos (protege contra ataques de host header injection)
 # Hosts permitidos
 ALLOWED_HOSTS = [
     "localhost",
@@ -33,7 +57,7 @@ ALLOWED_HOSTS = [
     "[::1]",
 ]
 
-# Corrige erro CSRF (403) - URLs confiáveis
+# Corrige erro CSRF (403) - URLs confiáveis para requisições
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
     "https://localhost:8000",
@@ -41,37 +65,48 @@ CSRF_TRUSTED_ORIGINS = [
     "https://127.0.0.1:8000",
 ]
 
-# Application definition
 
+# -------------------------------
+# APLICAÇÕES INSTALADAS
+# -------------------------------
+# # Application definition
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
+    "django.contrib.admin", # Painel administrativo
+    "django.contrib.auth", # Autenticação de usuários
+    "django.contrib.contenttypes", # Tipos de conteúdo (necessário para models)
+    "django.contrib.sessions", # Sessões (cookies de login)
+    "django.contrib.messages",  # Mensagens temporárias (feedback ao usuário)
+    "django.contrib.staticfiles",  # Arquivos estáticos (CSS, JS, imagens)
+    # Nosso app customizado
     "cardapio"
 ]
 
+# -------------------------------
+# MIDDLEWARE
+# Camada intermediária que processa as requisições e respostas
+# -------------------------------
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
+    "django.middleware.security.SecurityMiddleware", # Segurança (HTTPS, headers)
+    "django.contrib.sessions.middleware.SessionMiddleware", # Gerencia sessões
+    "django.middleware.common.CommonMiddleware", # Funcionalidades comuns
+    "django.middleware.csrf.CsrfViewMiddleware", # Proteção contra CSRF
+    "django.contrib.auth.middleware.AuthenticationMiddleware",  # Autenticação
+    "django.contrib.messages.middleware.MessageMiddleware", # Mensagens
+    "django.middleware.clickjacking.XFrameOptionsMiddleware", # Proteção clickjacking
+] 
 
-ROOT_URLCONF = "pizzaria.urls"
+# -------------------------------
+# URLS E TEMPLATES
+# -------------------------------
+ROOT_URLCONF = "pizzaria.urls" # Arquivo principal de rotas
 
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
-        "APP_DIRS": True,
+        "BACKEND": "django.template.backends.django.DjangoTemplates", # Motor de templates
+        "DIRS": [], # Pastas extras de templates (vazio porque usamos os apps)
+        "APP_DIRS": True, # Pastas extras de templates (vazio porque usamos os apps)
         "OPTIONS": {
-            "context_processors": [
+            "context_processors": [ # Variáveis globais que ficam disponíveis nos templates
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -80,9 +115,12 @@ TEMPLATES = [
     },
 ]
 
+# Configuração WSGI (para servidores tradicionais, ex: Gunicorn, Apache)
 WSGI_APPLICATION = "pizzaria.wsgi.application"
 
-
+# -------------------------------
+# BANCO DE DADOS
+# -------------------------------
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
@@ -93,7 +131,9 @@ DATABASES = {
     }
 }
 
-
+# -------------------------------
+# VALIDAÇÃO DE SENHAS
+# -------------------------------
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -112,30 +152,39 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+# -------------------------------
+# INTERNACIONALIZAÇÃO
+# -------------------------------
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 # Português brasileiro
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = 'pt-br' # Idioma padrão (Português do Brasil)
 
-TIME_ZONE = 'America/Sao_Paulo'
+TIME_ZONE = 'America/Sao_Paulo' # Fuso horário
 
-USE_I18N = True
+USE_I18N = True # Tradução de textos internos
 
-USE_TZ = True
+USE_TZ = True # Usa timezone nos DateTimeFields
 
-
+# -------------------------------
+# ARQUIVOS ESTÁTICOS E DE MÍDIA
+# -------------------------------
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "static/" # URL para servir arquivos estáticos (CSS, JS, imagens fixas)
+
+# Configurações para uploads de usuários (ex: fotos de pizzas)
+# Configurações para fotos
+MEDIA_URL = '/media/' # URL base
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Pasta onde os arquivos ficam
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
+# -------------------------------
+# CHAVE PRIMÁRIA PADRÃO
+# -------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Configurações para fotos
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

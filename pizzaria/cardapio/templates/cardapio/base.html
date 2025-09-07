@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <!-- Define a codificação de caracteres para suportar acentos -->
     <meta charset="UTF-8">
+     <!-- Ajusta a página para ser responsiva em dispositivos móveis -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título que aparece na aba do navegador -->
     <title>SENAC PIZZA</title>
     
-    <!-- Tailwind CSS (nosso "pintor" de páginas) -->
+    <!-- Importa o Tailwind CSS (framework de estilos para facilitar design moderno) -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+     <!-- Configuração personalizada do Tailwind (paleta de cores italiana) -->
     <script>
         tailwind.config = {
             theme: {
@@ -23,24 +29,32 @@
         }
     </script>
     
-    <!-- Ícones bonitos -->
+    <!-- Biblioteca de ícones Font Awesome (usada para pizza, folha, casa etc.) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
+
+<!-- Corpo da página com fundo em degradê suave -->
 <body class="min-h-screen bg-gradient-to-br from-creme to-white font-serif">
     
     <!-- Barra de navegação (como uma placa da pizzaria) -->
     <nav class="bg-gradient-to-r from-verde-italiano to-vermelho-italiano shadow-2xl">
         <div class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
+
+                 <!-- Logo e link para a página inicial -->
                 <a href="{% url 'cardapio:home' %}" class="text-white text-2xl font-bold">
                     <i class="fas fa-pizza-slice mr-2"></i>
                     SENAC PIZZA
                 </a>
                 
+                 <!-- Links de navegação (menu direito) -->
                 <div class="flex items-center space-x-6 text-white">
+                    <!-- Link para o cardápio -->
                     <a href="{% url 'cardapio:home' %}" class="hover:text-dourado">
                         <i class="fas fa-home mr-1"></i> Cardápio
                     </a>
+
+                     <!-- Link para a página de ingredientes -->
                     <a href="{% url 'cardapio:ingredientes' %}" class="hover:text-dourado">
                         <i class="fas fa-leaf mr-1"></i> Ingredientes
                     </a>
@@ -49,7 +63,7 @@
         </div>
     </nav>
 
-    <!-- Conteúdo das páginas -->
+    <!-- Área principal onde o conteúdo específico de cada página será exibido -->
     <main class="container mx-auto px-4 py-8">
         <div class="bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
             {% block content %}
