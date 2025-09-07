@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENAC PIZZA</title>
+    
+    <!-- Tailwind CSS (nosso "pintor" de páginas) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'verde-italiano': '#009639',
+                        'vermelho-italiano': '#CE2B37', 
+                        'dourado': '#D4AF37',
+                        'marrom-madeira': '#8B4513',
+                        'creme': '#FDF5E6',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Ícones bonitos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-creme to-white font-serif">
+    
+    <!-- Barra de navegação (como uma placa da pizzaria) -->
+    <nav class="bg-gradient-to-r from-verde-italiano to-vermelho-italiano shadow-2xl">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="{% url 'cardapio:home' %}" class="text-white text-2xl font-bold">
+                    <i class="fas fa-pizza-slice mr-2"></i>
+                    SENAC PIZZA
+                </a>
+                
+                <div class="flex items-center space-x-6 text-white">
+                    <a href="{% url 'cardapio:home' %}" class="hover:text-dourado">
+                        <i class="fas fa-home mr-1"></i> Cardápio
+                    </a>
+                    <a href="{% url 'cardapio:ingredientes' %}" class="hover:text-dourado">
+                        <i class="fas fa-leaf mr-1"></i> Ingredientes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo das páginas -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+</body>
+</html>

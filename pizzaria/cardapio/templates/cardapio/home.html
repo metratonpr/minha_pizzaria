@@ -1,0 +1,113 @@
+{% extends 'cardapio/base.html' %}
+
+{% block content %}
+<!-- Título principal -->
+<div class="text-center mb-12">
+    <h1 class="text-6xl font-bold text-marrom-madeira mb-4">
+        <i class="fas fa-pizza-slice text-vermelho-italiano mr-4"></i>
+        Nosso Cardápio
+        <i class="fas fa-pizza-slice text-vermelho-italiano ml-4"></i>
+    </h1>
+    <p class="text-2xl text-gray-700">
+        🍅 Pizzas feitas com amor pela Nonna Maria! 🍅
+    </p>
+</div>
+
+<!-- Seção de Pizzas Salgadas -->
+<section class="mb-16">
+    <h2 class="text-4xl font-bold text-marrom-madeira mb-8 border-b-4 border-dourado pb-2">
+        <i class="fas fa-pepper-hot text-vermelho-italiano mr-2"></i>
+        Pizzas Salgadas 🧄
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        {% for pizza in pizzas_salgadas %}
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border-4 border-dourado hover:scale-105 transition-all duration-300">
+            <!-- Foto da pizza -->
+            {% if pizza.foto %}
+            <img src="{{ pizza.foto.url }}" class="w-full h-64 object-cover" alt="{{ pizza.nome }}">
+            {% else %}
+            <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
+                <i class="fas fa-pizza-slice text-6xl text-gray-400"></i>
+            </div>
+            {% endif %}
+            
+            <!-- Informações da pizza -->
+            <div class="p-6">
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">{{ pizza.nome }}</h3>
+                <p class="text-gray-600 mb-4">{{ pizza.descricao|truncatewords:10 }}</p>
+                
+                <!-- Preço grande e bonito -->
+                <div class="text-center mb-4">
+                    <span class="bg-gradient-to-r from-vermelho-italiano to-red-600 text-white px-6 py-3 rounded-full font-bold text-2xl">
+                        R$ {{ pizza.preco_total|floatformat:2 }}
+                    </span>
+                    <p class="text-sm text-gray-500 mt-2">
+                        <i class="fas fa-clock mr-1"></i>{{ pizza.tempo_preparo }} minutos
+                    </p>
+                </div>
+                
+                <!-- Botão para ver detalhes -->
+                <div class="text-center">
+                    <a href="{% url 'cardapio:detalhe_pizza' pizza.id %}" 
+                       class="bg-verde-italiano text-white px-6 py-3 rounded-full font-semibold hover:bg-green-700 transition-all">
+                        <i class="fas fa-eye mr-2"></i> Ver Detalhes
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-gray-500 text-center">Nenhuma pizza salgada disponível no momento.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Seção de Pizzas Doces -->
+<section>
+    <h2 class="text-4xl font-bold text-marrom-madeira mb-8 border-b-4 border-dourado pb-2">
+        <i class="fas fa-candy-cane text-dourado mr-2"></i>
+        Pizzas Doces 🍫
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        {% for pizza in pizzas_doces %}
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border-4 border-dourado hover:scale-105 transition-all duration-300">
+            <!-- Foto da pizza -->
+            {% if pizza.foto %}
+            <img src="{{ pizza.foto.url }}" class="w-full h-64 object-cover" alt="{{ pizza.nome }}">
+            {% else %}
+            <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
+                <i class="fas fa-pizza-slice text-6xl text-gray-400"></i>
+            </div>
+            {% endif %}
+            
+            <!-- Informações da pizza -->
+            <div class="p-6">
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">{{ pizza.nome }}</h3>
+                <p class="text-gray-600 mb-4">{{ pizza.descricao|truncatewords:10 }}</p>
+                
+                <!-- Preço grande e bonito -->
+                <div class="text-center mb-4">
+                    <span class="bg-gradient-to-r from-dourado to-yellow-500 text-white px-6 py-3 rounded-full font-bold text-2xl">
+                        R$ {{ pizza.preco_total|floatformat:2 }}
+                    </span>
+                    <p class="text-sm text-gray-500 mt-2">
+                        <i class="fas fa-clock mr-1"></i>{{ pizza.tempo_preparo }} minutos
+                    </p>
+                </div>
+                
+                <!-- Botão para ver detalhes -->
+                <div class="text-center">
+                    <a href="{% url 'cardapio:detalhe_pizza' pizza.id %}" 
+                       class="bg-verde-italiano text-white px-6 py-3 rounded-full font-semibold hover:bg-green-700 transition-all">
+                        <i class="fas fa-eye mr-2"></i> Ver Detalhes
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-gray-500 text-center">Nenhuma pizza doce disponível no momento.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

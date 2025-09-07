@@ -1,0 +1,36 @@
+{# templates/cardapio/partials/pizza_card.html #}
+{% load static cardapio_extras %}
+
+<div class="bg-white rounded-2xl shadow-2xl overflow-hidden border-4 {{ border_color|default:'border-dourado' }} hover:scale-105 transition-all duration-300">
+  {# Imagem da pizza com fallback #}
+  {% if pizza.foto %}
+    <img src="{{ pizza.foto.url }}" class="w-full h-64 object-cover" alt="Foto da pizza {{ pizza.nome }}">
+  {% else %}
+    <img src="{% static 'img/placeholder-pizza.jpg' %}" class="w-full h-64 object-cover" alt="Imagem ilustrativa de pizza">
+  {% endif %}
+
+  <div class="p-6">
+    <h3 class="text-2xl font-bold text-gray-800 mb-2">{{ pizza.nome }}</h3>
+    <p class="text-gray-600 mb-4">{{ pizza.descricao|default_if_none:""|truncatewords:16 }}</p>
+
+    <div class="text-center mb-4">
+      <span class="bg-gradient-to-r {{ price_gradient|default:'from-vermelho-italiano to-red-600' }} text-white px-6 py-3 rounded-full font-bold text-2xl">
+        {{ pizza.preco_total|brl }}
+      </span>
+      <p class="text-sm text-gray-500 mt-2">
+        <i class="fas fa-clock mr-1"></i>
+        {{ pizza.tempo_preparo }} minuto{{ pizza.tempo_preparo|pluralize:"s" }}
+      </p>
+    </div>
+
+    <div class="text-center">
+      <a
+        href="{{ pizza.get_absolute_url|default:detail_url }}"
+        class="bg-verde-italiano text-white px-6 py-3 rounded-full font-semibold hover:bg-green-700 transition-all"
+        aria-label="Ver detalhes da pizza {{ pizza.nome }}"
+      >
+        <i class="fas fa-eye mr-2" aria-hidden="true"></i> Ver Detalhes
+      </a>
+    </div>
+  </div>
+</div>
